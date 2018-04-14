@@ -13,7 +13,7 @@ namespace Lab4_Ana_Edwin.Controllers
 {
     public class AlbumController : Controller
     {
-        List<Mostrar> mostrar = new List<Mostrar>();
+        public static List<Mostrar> mostrar = new List<Mostrar>();
         Mostrar objmostrar = new Mostrar();
         public static Dictionary<string, Paises> Diccionario1 = new Dictionary<string, Paises>();
         public static Dictionary<string, Calcomanias> Diccionario2 = new Dictionary<string, Calcomanias>();
@@ -52,13 +52,21 @@ namespace Lab4_Ana_Edwin.Controllers
             }
             return View();
         }
+
+
         public ActionResult Busqueda()
         {
             return View();
         }
+        public ActionResult listadoBusqueda()
+        {
+            return View(mostrar);
+        }
+
         [HttpPost]
         public ActionResult Busqueda(int estampa)
         {
+            Mostrar objmostrar = new Mostrar();
             for (int i = 0; i < Diccionario1.Count; i++)
             {
                foreach(var item in Diccionario1.ElementAt(i).Value.faltantes)
@@ -89,7 +97,7 @@ namespace Lab4_Ana_Edwin.Controllers
                     }
                 }
             }
-            return View(mostrar);
+            return RedirectToAction("listadoBusqueda");
         }
         public ActionResult Diccionario()
         {
