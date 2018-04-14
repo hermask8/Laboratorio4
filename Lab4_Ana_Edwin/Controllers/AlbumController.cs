@@ -42,77 +42,40 @@ namespace Lab4_Ana_Edwin.Controllers
             }
             return View();
         }
-
-        // GET: Album/Details/5
-        public ActionResult Details(int id)
+        
+        public ActionResult LeerCambios()
         {
             return View();
         }
-
-        // GET: Album/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Album/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult LeerCambios(HttpPostedFileBase Archivo)
         {
-            try
+            string pathArchivo = string.Empty;
+            if (Archivo != null)
             {
-                // TODO: Add insert logic here
+                Archivo.SaveAs(Server.MapPath("~/JSONFiles" + Path.GetFileName(Archivo.FileName)));
+                StreamReader sr = new StreamReader(Server.MapPath("~/JSONFiles" + Path.GetFileName(Archivo.FileName)));
+                var informacion = sr.ReadToEnd();
+                var lista = JsonConvert.DeserializeObject<List<Dictionary<string, bool>>>(informacion);
+                
+                for (int i = 0; i < lista.Count(); i++)
+                {
+                    var atributos = lista.ElementAt(i).ElementAt(0).Key.Split('_');
+                    var valor = lista.ElementAt(i).ElementAt(0).Value;
+                    var llave = lista.ElementAt(i).ElementAt(0).Key;
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                    Calcomanias miCalcomania = new Calcomanias
+                    {
+                        Contenidos = valor,
+                        Numero = atributos[1],
+                        Pais = atributos[0]
+                    };
+                    Diccionario2.Add(llave,miCalcomania);
 
-        // GET: Album/Edit/5
-        public ActionResult Edit(int id)
-        {
+                }
+                
+            }
             return View();
-        }
-
-        // POST: Album/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Album/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Album/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
