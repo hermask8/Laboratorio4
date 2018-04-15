@@ -16,7 +16,7 @@ namespace Lab4_Ana_Edwin
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Album", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Album", action = "Diccionario", id = UrlParameter.Optional }
             );
         }
     }
