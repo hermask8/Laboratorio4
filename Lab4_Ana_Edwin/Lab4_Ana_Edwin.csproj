@@ -193,6 +193,11 @@
     <Content Include="Views\Album\LeerCambios.cshtml" />
     <Content Include="Views\Album\Diccionario.cshtml" />
     <Content Include="Views\Album\Busqueda.cshtml" />
+    <Content Include="Views\Album\listadoBusqueda.cshtml" />
+    <Content Include="Views\Album\RetornarFaltantes.cshtml" />
+    <Content Include="Views\Album\RetornarColeccionadas.cshtml" />
+    <Content Include="Views\Album\RetornarCambios.cshtml" />
+    <Content Include="Views\Album\RetornarDiccionario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

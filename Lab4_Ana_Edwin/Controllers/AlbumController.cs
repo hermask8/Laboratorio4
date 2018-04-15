@@ -13,8 +13,12 @@ namespace Lab4_Ana_Edwin.Controllers
 {
     public class AlbumController : Controller
     {
-        List<Mostrar> mostrar = new List<Mostrar>();
-        Mostrar objmostrar = new Mostrar();
+        public static List<Mostrar> mostrar = new List<Mostrar>();
+        public static List<Mostrar> mostrarFaltantes = new List<Mostrar>();
+        public static List<Mostrar> mostrarColeccionadas = new List<Mostrar>();
+        public static List<Mostrar> mostrarCambios = new List<Mostrar>();
+        public static List<Mostrar> mostrarDiccionario = new List<Mostrar>();
+       
         public static Dictionary<string, Paises> Diccionario1 = new Dictionary<string, Paises>();
         public static Dictionary<string, Calcomanias> Diccionario2 = new Dictionary<string, Calcomanias>();
         // GET: Album
@@ -42,7 +46,7 @@ namespace Lab4_Ana_Edwin.Controllers
                     Calcomanias miCalcomania = new Calcomanias
                     {
                         Contenidos = valor,
-                        Numero = atributos[1],
+                        Numero = int.Parse(atributos[1]),
                         Pais = atributos[0]
                     };
                     Diccionario2.Add(llave, miCalcomania);
@@ -50,15 +54,39 @@ namespace Lab4_Ana_Edwin.Controllers
                 }
 
             }
+            Refrescar();
             return View();
+        }
+        public void Refrescar()
+        {
+            foreach (var item in Diccionario1)
+            {
+                foreach (var item2 in Diccionario2)
+                {
+                    if (item.Key == item2.Value.Pais)
+                    {
+                        if (item2.Value.Contenidos == true)
+                        {
+                            item.Value.cambios.Add(item2.Value.Numero);
+                        }
+                        else
+                        {
+                            item.Value.coleccionadas.Add(item2.Value.Numero);
+                            item.Value.faltantes.Remove(item2.Value.Numero);
+                        }
+                    }
+                }
+            }
         }
         public ActionResult Busqueda()
         {
+            mostrar.Clear();
             return View();
         }
         [HttpPost]
         public ActionResult Busqueda(int estampa)
         {
+            Mostrar objmostrar = new Mostrar();
             for (int i = 0; i < Diccionario1.Count; i++)
             {
                foreach(var item in Diccionario1.ElementAt(i).Value.faltantes)
@@ -89,6 +117,10 @@ namespace Lab4_Ana_Edwin.Controllers
                     }
                 }
             }
+            return RedirectToAction("listadoBusqueda");
+        }
+        public ActionResult listadoBusqueda()
+        {
             return View(mostrar);
         }
         public ActionResult Diccionario()
@@ -113,10 +145,89 @@ namespace Lab4_Ana_Edwin.Controllers
                     var pais = lista.ElementAt(i).ElementAt(0).Value;
                     Diccionario1.Add(llave, pais);
                 }
-
+                ReturnFaltantes();
+                ReturnColeccionadas();
+                ReturnCambios();
+                ReturnDiccionario();
             }
-            return View();
+            return RedirectToAction("RetornarDiccionario");
         }
+        
+        
+        public ActionResult RetornarFaltantes()
+        {
+            return View( mostrarFaltantes);
+        }
+        public void ReturnFaltantes()
+        {
+            Mostrar objFaltantes = new Mostrar();
+            for (int i = 0; i < Diccionario1.Count; i++)
+            {
+                foreach (var item in Diccionario1.ElementAt(i).Value.faltantes)
+                {
+                    objFaltantes.listaUbicación = "Faltantes";
+                    objFaltantes.estampita = item;
+                    mostrarFaltantes.Add(objFaltantes);
+                }
+            }
+        }
+        
+        public ActionResult RetornarColeccionadas()
+        {
+            return View(mostrarColeccionadas);
+        }
+        public void ReturnColeccionadas()
+        {
+            Mostrar objColeccionadas = new Mostrar();
+            for (int i = 0; i < Diccionario1.Count; i++)
+            {
+                foreach (var item in Diccionario1.ElementAt(i).Value.coleccionadas)
+                {
+                    objColeccionadas.listaUbicación = "Coleccionadas";
+                    objColeccionadas.estampita = item;
+                    mostrarColeccionadas.Add(objColeccionadas);
+                }
+            }
+        }
+        
+        public ActionResult RetornarCambios()
+        { 
+            return View(mostrarCambios);
+        }
+        public void ReturnCambios()
+        {
+            Mostrar objCambios = new Mostrar();
+            for (int i = 0; i < Diccionario1.Count; i++)
+            {
+                foreach (var item in Diccionario1.ElementAt(i).Value.coleccionadas)
+                {
+                    objCambios.listaUbicación = "Cambios";
+                    objCambios.estampita = item;
+                    mostrarCambios.Add(objCambios);
+                }
+            }
+        }
+        public ActionResult RetornarDiccionario()
+        {
+            return View(mostrarDiccionario);
+        }
+        
+        public void ReturnDiccionario()
+        {
+            foreach (var item in mostrarFaltantes)
+            {
+                mostrarDiccionario.Add(item); 
+            }
+            foreach(var item in mostrarColeccionadas)
+            {
+                mostrarDiccionario.Add(item);
+            }
+            foreach (var item in mostrarCambios)
+            {
+                mostrarDiccionario.Add(item);
+            }
+        }
+        
         public ActionResult Index()
         {
             return View();

@@ -9,6 +9,6 @@ namespace Lab4_Ana_Edwin.Models
     {
         public bool Contenidos { get; set; }
         public string Pais { get; set; }
-        public string Numero { get; set; }
+        public int Numero { get; set; }
     }
 }
