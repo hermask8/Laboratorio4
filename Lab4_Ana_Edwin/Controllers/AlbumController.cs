@@ -42,7 +42,7 @@ namespace Lab4_Ana_Edwin.Controllers
                     Calcomanias miCalcomania = new Calcomanias
                     {
                         Contenidos = valor,
-                        Numero = atributos[1],
+                        Numero = int.Parse(atributos[1]),
                         Pais = atributos[0]
                     };
                     Diccionario2.Add(llave, miCalcomania);
@@ -50,12 +50,36 @@ namespace Lab4_Ana_Edwin.Controllers
                 }
 
             }
+
+            Refrescar();
             return View();
         }
 
+        public void Refrescar()
+        {
+            foreach (var item in Diccionario1)
+            {
+                foreach (var item2 in Diccionario2)
+                {
+                    if (item.Key==item2.Value.Pais)
+                    {
+                        if (item2.Value.Contenidos==true)
+                        {
+                            item.Value.cambios.Add(item2.Value.Numero);
+                        }
+                        else
+                        {
+                            item.Value.coleccionadas.Add(item2.Value.Numero);
+                            item.Value.faltantes.Remove(item2.Value.Numero);
+                        }
+                    }
+                }
+            }
+        }
 
         public ActionResult Busqueda()
         {
+            mostrar.Clear();
             return View();
         }
         public ActionResult listadoBusqueda()
