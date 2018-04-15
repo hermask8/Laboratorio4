@@ -37,11 +37,11 @@ namespace Lab4_Ana_Edwin.Controllers
                 var informacion = sr.ReadToEnd();
                 var lista = JsonConvert.DeserializeObject<List<Dictionary<string, bool>>>(informacion);
 
-                for (int i = 0; i < lista.Count(); i++)
+                for (int i = 0; i < lista.ElementAt(0).Count(); i++)
                 {
-                    var atributos = lista.ElementAt(i).ElementAt(0).Key.Split('_');
-                    var valor = lista.ElementAt(i).ElementAt(0).Value;
-                    var llave = lista.ElementAt(i).ElementAt(0).Key;
+                    var atributos = lista.ElementAt(0).ElementAt(i).Key.Split('_');
+                    var valor = lista.ElementAt(0).ElementAt(i).Value;
+                    var llave = lista.ElementAt(0).ElementAt(i).Key;
 
                     Calcomanias miCalcomania = new Calcomanias
                     {
@@ -55,7 +55,12 @@ namespace Lab4_Ana_Edwin.Controllers
 
             }
             Refrescar();
-            return View();
+
+            ReturnFaltantes();
+            ReturnColeccionadas();
+            ReturnCambios();
+            ReturnDiccionario();
+            return RedirectToAction("RetornarDiccionario");
         }
         public void Refrescar()
         {
@@ -86,6 +91,7 @@ namespace Lab4_Ana_Edwin.Controllers
         [HttpPost]
         public ActionResult Busqueda(int estampa)
         {
+
             Mostrar objmostrar = new Mostrar();
             for (int i = 0; i < Diccionario1.Count; i++)
             {
@@ -160,11 +166,12 @@ namespace Lab4_Ana_Edwin.Controllers
         }
         public void ReturnFaltantes()
         {
-            Mostrar objFaltantes = new Mostrar();
+            mostrarFaltantes.Clear();
             for (int i = 0; i < Diccionario1.Count; i++)
             {
                 foreach (var item in Diccionario1.ElementAt(i).Value.faltantes)
                 {
+                    Mostrar objFaltantes = new Mostrar();
                     objFaltantes.listaUbicación = "Faltantes";
                     objFaltantes.estampita = item;
                     mostrarFaltantes.Add(objFaltantes);
@@ -178,11 +185,12 @@ namespace Lab4_Ana_Edwin.Controllers
         }
         public void ReturnColeccionadas()
         {
-            Mostrar objColeccionadas = new Mostrar();
+            mostrarColeccionadas.Clear();
             for (int i = 0; i < Diccionario1.Count; i++)
             {
                 foreach (var item in Diccionario1.ElementAt(i).Value.coleccionadas)
                 {
+                    Mostrar objColeccionadas = new Mostrar();
                     objColeccionadas.listaUbicación = "Coleccionadas";
                     objColeccionadas.estampita = item;
                     mostrarColeccionadas.Add(objColeccionadas);
@@ -196,11 +204,12 @@ namespace Lab4_Ana_Edwin.Controllers
         }
         public void ReturnCambios()
         {
-            Mostrar objCambios = new Mostrar();
+            mostrarCambios.Clear();
             for (int i = 0; i < Diccionario1.Count; i++)
             {
-                foreach (var item in Diccionario1.ElementAt(i).Value.coleccionadas)
+                foreach (var item in Diccionario1.ElementAt(i).Value.cambios)
                 {
+                    Mostrar objCambios = new Mostrar();
                     objCambios.listaUbicación = "Cambios";
                     objCambios.estampita = item;
                     mostrarCambios.Add(objCambios);
@@ -214,6 +223,7 @@ namespace Lab4_Ana_Edwin.Controllers
         
         public void ReturnDiccionario()
         {
+            mostrarDiccionario.Clear();
             foreach (var item in mostrarFaltantes)
             {
                 mostrarDiccionario.Add(item); 
