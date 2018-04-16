@@ -148,6 +148,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Calcomanias.cs" />
+    <Compile Include="Models\Mostrar.cs" />
     <Compile Include="Models\Paises.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,6 +191,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Album\Index.cshtml" />
     <Content Include="Views\Album\LeerCambios.cshtml" />
+    <Content Include="Views\Album\Diccionario.cshtml" />
+    <Content Include="Views\Album\Busqueda.cshtml" />
+    <Content Include="Views\Album\listadoBusqueda.cshtml" />
+    <Content Include="Views\Album\RetornarFaltantes.cshtml" />
+    <Content Include="Views\Album\RetornarColeccionadas.cshtml" />
+    <Content Include="Views\Album\RetornarCambios.cshtml" />
+    <Content Include="Views\Album\RetornarDiccionario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

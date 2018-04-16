@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Lab4_Ana_Edwin.Models.Mostrar>
+
+@{
+    ViewBag.Title = "Busqueda";
+}
+
+<h2>Busqueda</h2>
+@using (Html.BeginForm("Busqueda", "Album", FormMethod.Post))
+{
+    <div>
+        <input type="text" name="estampa" />
+        <input type="submit" value="Buscar" />
+    </div>
+}
+
+

@@ -1,15 +1,6 @@
-﻿<h2>CargaJson</h2>
-<label>Carga de modo automatico</label>
-@Html.ActionLink("Ir a cambio de datos", "LeerCambios", "Album")
-@using (Html.BeginForm("Index", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div>
-        <input type="file" name="Archivo" />
-        <input type="submit" value="Importar" />
-
-
-
-    </div>
-
-
+﻿
+@{
+    ViewBag.Title = "Index";
 }
+
+<h2>Index</h2>

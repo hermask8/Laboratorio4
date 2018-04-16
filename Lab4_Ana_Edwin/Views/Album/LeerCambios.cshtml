@@ -1,14 +1,14 @@
-﻿<h2>CargaJson</h2>
+﻿<h2>Carga Json Para Hacer Cambios En Diccionario 1</h2>
 <label>Carga de modo automatico</label>
 @using (Html.BeginForm("LeerCambios", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div>
-        <input type="file" name="Archivo" />
-        <input type="submit" value="Importar" />
+<div>
+    <input type="file" name="Archivo" />
+    <input type="submit" value="Importar" />
 
 
-        @Html.ActionLink("Ir a Home", "Index", "Home")
-    </div>
+    @Html.ActionLink("Ir a Home", "RetornarDiccionario", "Album")
+</div>
 
 
 }

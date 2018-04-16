@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Subir Estampas";
+}
+
+<h2>Carga Json Para Llenar Diccionario 1</h2>
+<label>Carga de modo automatico</label>
+@using (Html.BeginForm("Diccionario", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div>
+    <input type="file" name="Archivo" />
+    <input type="submit" value="Importar" />
+
+    
+
+</div>
+
+
+}
+
